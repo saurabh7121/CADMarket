@@ -21,6 +21,7 @@ const billingSchema = new mongoose.Schema({
 }, { _id: false });
 
 const orderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }, // null = guest
   items: [orderItemSchema],
   billing: billingSchema,
   totalAmount: { type: Number, required: true },
@@ -37,5 +38,6 @@ const orderSchema = new mongoose.Schema({
 
 orderSchema.index({ 'billing.email': 1 });
 orderSchema.index({ paymentId: 1 });
+orderSchema.index({ userId: 1, status: 1 });
 
 module.exports = mongoose.model('Order', orderSchema);

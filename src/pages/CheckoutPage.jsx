@@ -1,20 +1,62 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useUserAuth } from '../context/UserAuthContext';
 import api from '../lib/api';
 import { LoadingPage, EmptyState } from '../components/UI';
-import { ShoppingCart, User, Mail, Phone, MapPin, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, User, Mail, Phone, MapPin, ShieldCheck, ArrowLeft, LogIn } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function CheckoutPage() {
   const { items, total, clearCart, count } = useCart();
+  const { user, isLoggedIn } = useUserAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    fullName: '', email: '', phone: '',
+    fullName: user?.name || '', email: user?.email || '', phone: user?.phone || '',
     address: '', city: '', state: '', pincode: '', country: 'India',
   });
   const [errors, setErrors] = useState({});
+
+  // Update prefill if user changes
+  useEffect(() => {
+    if (user) {
+      setForm(f => ({
+        ...f,
+        fullName: f.fullName || user.name || '',
+        email: f.email || user.email || '',
+        phone: f.phone || user.phone || '',
+      }));
+    }
+  }, [user]);
+
+  // Redirect if not logged in
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen pt-24 flex items-center justify-center">
+        <div className="glass-card p-10 text-center max-w-sm w-full mx-4">
+          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-[#404040] flex items-center justify-center mx-auto mb-4">
+            <LogIn size={24} className="text-white" />
+          </div>
+          <h2 className="text-xl font-bold text-[#e8e8f0] mb-2">Sign in to checkout</h2>
+          <p className="text-sm text-[#8888aa] mb-6">
+            Create an account or sign in to complete your purchase and track your order history.
+          </p>
+          <Link
+            to="/login"
+            state={{ from: '/checkout' }}
+            className="btn-primary w-full justify-center"
+          >
+            <LogIn size={15} /> Sign In
+          </Link>
+          <Link to="/signup" state={{ from: '/checkout' }} className="block mt-3 text-sm text-white hover:underline transition-colors">
+            New here? Create a free account
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (count === 0) {
     return (
@@ -51,12 +93,13 @@ export default function CheckoutPage() {
     if (Object.keys(errs).length) { setErrors(errs); return; }
 
     setLoading(true);
+    const token = localStorage.getItem('cadmarket_user_token');
     try {
       // Create Razorpay order
       const { data } = await api.post('/payments/create-order', {
         items: items.map(i => ({ productId: i._id, price: i.price })),
         billing: form,
-      });
+      }, token ? { headers: { Authorization: `Bearer ${token}` } } : {});
 
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -80,7 +123,7 @@ export default function CheckoutPage() {
           }
         },
         prefill: { name: form.fullName, email: form.email, contact: form.phone },
-        theme: { color: '#6c63ff' },
+        theme: { color: '#ffffff' },
         modal: { ondismiss: () => setLoading(false) },
       };
 
@@ -111,7 +154,7 @@ export default function CheckoutPage() {
             <div className="lg:col-span-2 space-y-6">
               <div className="glass-card p-6">
                 <h2 className="font-bold text-lg text-[#e8e8f0] mb-5 flex items-center gap-2">
-                  <User size={18} className="text-[#6c63ff]" /> Billing Details
+                  <User size={18} className="text-white" /> Billing Details
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field
@@ -155,7 +198,7 @@ export default function CheckoutPage() {
               </div>
 
               {/* Payment info */}
-              <div className="glass-card p-5 flex items-start gap-3 border-[#6c63ff]/20">
+              <div className="glass-card p-5 flex items-start gap-3 border-[#404040]">
                 <ShieldCheck size={20} className="text-[#00c851] shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-semibold text-[#e8e8f0] mb-1">Secure Payment via Razorpay</p>
@@ -175,9 +218,9 @@ export default function CheckoutPage() {
                   {items.map(item => (
                     <div key={item._id} className="flex gap-3">
                       <img
-                        src={item.thumbnail || 'https://placehold.co/50x38/12121a/6c63ff?text=CAD'}
+                        src={item.thumbnail || 'https://placehold.co/50x38/171717/ffffff?text=CAD'}
                         alt={item.title}
-                        className="w-12 h-9 rounded-lg object-cover shrink-0"
+                        className="w-12 h-9 rounded-lg object-cover shrink-0 border border-[#404040]"
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-medium text-[#e8e8f0] truncate">{item.title}</p>

@@ -27,8 +27,8 @@ export default function ContactPage() {
       <div className="container-narrow px-4 py-16">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-black text-[#e8e8f0] mb-3">Get in Touch</h1>
-          <p className="text-[#8888aa] max-w-md mx-auto">
+          <h1 className="text-3xl sm:text-4xl font-black text-[#e5e5e5] mb-3">Get in Touch</h1>
+          <p className="text-[#a3a3a3] max-w-md mx-auto text-sm sm:text-base">
             Have questions about our CAD designs? Need custom files? We're here to help.
           </p>
         </div>
@@ -42,23 +42,23 @@ export default function ContactPage() {
               { icon: MapPin, label: 'Location', value: 'Mumbai, Maharashtra, India' },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="glass-card p-5 flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-[#6c63ff]/10 border border-[#6c63ff]/20 flex items-center justify-center shrink-0">
-                  <Icon size={18} className="text-[#6c63ff]" />
+                <div className="w-10 h-10 rounded bg-white/5 border border-[#404040] flex items-center justify-center shrink-0">
+                  <Icon size={18} className="text-[#e5e5e5]" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#8888aa] mb-0.5">{label}</p>
+                  <p className="text-xs text-[#a3a3a3] mb-0.5">{label}</p>
                   {href ? (
-                    <a href={href} className="text-sm text-[#e8e8f0] hover:text-[#8b85ff] transition-colors">{value}</a>
+                    <a href={href} className="text-sm text-[#e5e5e5] hover:text-white transition-colors">{value}</a>
                   ) : (
-                    <p className="text-sm text-[#e8e8f0]">{value}</p>
+                    <p className="text-sm text-[#e5e5e5]">{value}</p>
                   )}
                 </div>
               </div>
             ))}
 
             <div className="glass-card p-5">
-              <h3 className="font-semibold text-sm text-[#e8e8f0] mb-2">Business Hours</h3>
-              <div className="space-y-1 text-sm text-[#8888aa]">
+              <h3 className="font-semibold text-sm text-[#e5e5e5] mb-2">Business Hours</h3>
+              <div className="space-y-1 text-sm text-[#a3a3a3]">
                 <div className="flex justify-between"><span>Monday – Friday</span><span>9:00 AM – 6:00 PM</span></div>
                 <div className="flex justify-between"><span>Saturday</span><span>10:00 AM – 4:00 PM</span></div>
                 <div className="flex justify-between"><span>Sunday</span><span>Closed</span></div>
@@ -70,9 +70,9 @@ export default function ContactPage() {
           <div className="md:col-span-3">
             {sent ? (
               <div className="glass-card p-10 text-center">
-                <CheckCircle className="text-[#00c851] mx-auto mb-4" size={48} />
-                <h3 className="text-xl font-bold text-[#e8e8f0] mb-2">Message Sent!</h3>
-                <p className="text-[#8888aa] mb-5">We'll get back to you within 24 hours.</p>
+                <CheckCircle className="text-white mx-auto mb-4" size={48} />
+                <h3 className="text-xl font-bold text-[#e5e5e5] mb-2">Message Sent!</h3>
+                <p className="text-[#a3a3a3] mb-5">We'll get back to you within 24 hours.</p>
                 <button onClick={() => { setSent(false); setForm({ name: '', email: '', subject: '', message: '' }); }} className="btn-primary">
                   Send Another
                 </button>
@@ -81,7 +81,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="glass-card p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#8888aa] mb-1.5">Name *</label>
+                    <label className="block text-xs font-semibold text-[#a3a3a3] mb-1.5">Name *</label>
                     <input
                       required value={form.name}
                       onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
@@ -90,7 +90,7 @@ export default function ContactPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#8888aa] mb-1.5">Email *</label>
+                    <label className="block text-xs font-semibold text-[#a3a3a3] mb-1.5">Email *</label>
                     <input
                       required type="email" value={form.email}
                       onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
@@ -100,7 +100,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#8888aa] mb-1.5">Subject *</label>
+                  <label className="block text-xs font-semibold text-[#a3a3a3] mb-1.5">Subject *</label>
                   <input
                     required value={form.subject}
                     onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
@@ -109,7 +109,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#8888aa] mb-1.5">Message *</label>
+                  <label className="block text-xs font-semibold text-[#a3a3a3] mb-1.5">Message *</label>
                   <textarea
                     required rows={5} value={form.message}
                     onChange={e => setForm(f => ({ ...f, message: e.target.value }))}

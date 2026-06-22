@@ -82,9 +82,9 @@ export default function ProductsPage() {
     <div className="min-h-screen pt-20">
       <div className="container-wide px-4 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-black text-[#e8e8f0] mb-1">CAD Designs</h1>
-          <p className="text-[#8888aa]">{total > 0 ? `${total} designs available` : 'Browse our collection'}</p>
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#e5e5e5] mb-1">CAD Designs</h1>
+          <p className="text-[#a3a3a3] text-sm">{total > 0 ? `${total} designs available` : 'Browse our collection'}</p>
         </div>
 
         <div className="flex gap-6">
@@ -111,16 +111,16 @@ export default function ProductsPage() {
                 className="lg:hidden btn-ghost text-sm"
               >
                 <SlidersHorizontal size={14} /> Filters
-                {hasFilters && <span className="w-2 h-2 rounded-full bg-[#6c63ff] ml-1" />}
+                {hasFilters && <span className="w-2 h-2 rounded-full bg-white ml-1" />}
               </button>
               <div className="hidden lg:block" />
               <div className="flex items-center gap-2 ml-auto">
-                <span className="text-xs text-[#8888aa] whitespace-nowrap">{total} results</span>
+                <span className="text-xs text-[#a3a3a3] whitespace-nowrap hidden sm:inline">{total} results</span>
                 <div className="relative">
                   <select
                     value={sort}
                     onChange={e => { setSort(e.target.value); setPage(1); }}
-                    className="input-field text-xs py-1.5 pr-8 appearance-none"
+                    className="input-field text-xs py-1.5 pr-8 appearance-none cursor-pointer"
                   >
                     {SORT_OPTIONS.map(o => (
                       <option key={o.value} value={o.value}>{o.label}</option>
@@ -169,10 +169,10 @@ export default function ProductsPage() {
                     <button
                       key={p}
                       onClick={() => setPage(p)}
-                      className={`w-9 h-9 rounded-lg text-sm font-medium transition-all ${
+                      className={`w-9 h-9 rounded text-sm font-medium transition-all ${
                         p === page
-                          ? 'bg-[#6c63ff] text-white'
-                          : 'bg-white/5 text-[#8888aa] hover:text-[#e8e8f0] border border-[#2a2a3e]'
+                          ? 'bg-white text-black'
+                          : 'bg-white/5 text-[#a3a3a3] hover:text-[#e5e5e5] border border-[#404040]'
                       }`}
                     >
                       {p}
@@ -196,9 +196,9 @@ export default function ProductsPage() {
       {filtersOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div className="absolute inset-0 bg-black/60" onClick={() => setFiltersOpen(false)} />
-          <div className="relative ml-auto w-72 h-full bg-[#0a0a0f] border-l border-[#2a2a3e] p-5 overflow-y-auto animate-slide-in">
+          <div className="relative ml-auto w-80 max-w-[85vw] h-full bg-[#000000] border-l border-[#404040] p-5 overflow-y-auto animate-slide-in">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-semibold">Filters</h3>
+              <h3 className="font-semibold text-[#e5e5e5]">Filters</h3>
               <button onClick={() => setFiltersOpen(false)}>
                 <X size={18} className="text-[#8888aa]" />
               </button>
@@ -245,10 +245,10 @@ function FilterPanel({ search, setSearch, category, setCategory, sort, setSort, 
             <button
               key={c}
               onClick={() => setCategory(c)}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+              className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
                 category === c
-                  ? 'bg-[#6c63ff]/15 text-[#8b85ff] border border-[#6c63ff]/30'
-                  : 'text-[#8888aa] hover:text-[#e8e8f0] hover:bg-white/5'
+                  ? 'bg-white/10 text-white border border-white/20'
+                  : 'text-[#a3a3a3] hover:text-[#e5e5e5] hover:bg-white/5'
               }`}
             >
               {c}

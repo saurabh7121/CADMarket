@@ -68,7 +68,7 @@ export default function OrderSuccessPage() {
             {/* Customer info */}
             <div className="glass-card p-5">
               <h3 className="font-semibold text-[#e8e8f0] mb-3 flex items-center gap-2">
-                <Package size={16} className="text-[#6c63ff]" /> Order Details
+                <Package size={16} className="text-white" /> Order Details
               </h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
@@ -94,7 +94,7 @@ export default function OrderSuccessPage() {
             <div className="glass-card p-5">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-[#e8e8f0] flex items-center gap-2">
-                  <Download size={16} className="text-[#6c63ff]" /> Your Downloads
+                  <Download size={16} className="text-white" /> Your Downloads
                 </h3>
                 {order.items?.length > 1 && (
                   <button
@@ -110,11 +110,11 @@ export default function OrderSuccessPage() {
 
               <div className="space-y-3">
                 {order.items?.map(item => (
-                  <div key={item.productId} className="flex items-center gap-4 p-3 bg-white/3 rounded-xl border border-[#2a2a3e]">
+                  <div key={item.productId} className="flex items-center gap-4 p-3 bg-white/3 rounded-xl border border-[#404040]">
                     <img
-                      src={item.thumbnail || 'https://placehold.co/50x38/12121a/6c63ff?text=CAD'}
+                      src={item.thumbnail || 'https://placehold.co/50x38/171717/ffffff?text=CAD'}
                       alt={item.title}
-                      className="w-14 h-10 rounded-lg object-cover shrink-0"
+                      className="w-14 h-10 rounded-lg object-cover shrink-0 border border-[#404040]"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[#e8e8f0] truncate">{item.title}</p>

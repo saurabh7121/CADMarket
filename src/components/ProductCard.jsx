@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, Eye, Star, Download } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
-const FALLBACK = 'https://placehold.co/400x300/12121a/6c63ff?text=CAD+Design';
+const FALLBACK = 'https://placehold.co/400x300/171717/e5e5e5?text=CAD+Design';
 
 export default function ProductCard({ product }) {
   const { addItem, isInCart } = useCart();
@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
         {product.fileFormats?.length > 0 && (
           <div className="absolute top-2 right-2 flex gap-1">
             {product.fileFormats.slice(0, 2).map(f => (
-              <span key={f} className="text-[9px] font-bold px-1.5 py-0.5 bg-[#0a0a0f]/80 text-[#00d4ff] rounded border border-[#00d4ff]/20">
+              <span key={f} className="text-[9px] font-bold px-1.5 py-0.5 bg-[#000000]/80 text-[#a3a3a3] rounded border border-[#404040]">
                 {f}
               </span>
             ))}
@@ -50,10 +50,10 @@ export default function ProductCard({ product }) {
 
       {/* Body */}
       <div className="p-4">
-        <h3 className="font-semibold text-sm text-[#e8e8f0] line-clamp-1 mb-1 group-hover:text-[#8b85ff] transition-colors">
+        <h3 className="font-semibold text-sm text-[#e5e5e5] line-clamp-1 mb-1 group-hover:text-white transition-colors">
           {product.title}
         </h3>
-        <p className="text-xs text-[#8888aa] line-clamp-2 leading-relaxed mb-3">
+        <p className="text-xs text-[#a3a3a3] line-clamp-2 leading-relaxed mb-3">
           {product.description}
         </p>
 
@@ -63,18 +63,18 @@ export default function ProductCard({ product }) {
               <Star
                 key={i}
                 size={10}
-                className={i < 4 ? 'text-[#ffbb33] fill-[#ffbb33]' : 'text-[#2a2a3e]'}
+                className={i < 4 ? 'text-[#e5e5e5] fill-[#e5e5e5]' : 'text-[#404040]'}
               />
             ))}
           </div>
-          <span className="text-xs text-[#8888aa]">
+          <span className="text-xs text-[#a3a3a3]">
             <Download size={10} className="inline mr-0.5" />
             {product.downloads || 0}
           </span>
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="font-bold text-lg gradient-text">
+          <span className="font-bold text-lg text-white">
             ₹{(product.price || 0).toLocaleString('en-IN')}
           </span>
           <button

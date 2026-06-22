@@ -44,12 +44,12 @@ export default function ProductDetailPage() {
     <div className="min-h-screen pt-20">
       <div className="container-wide px-4 py-8">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-[#8888aa] mb-6">
-          <Link to="/products" className="flex items-center gap-1 hover:text-[#e8e8f0] transition-colors">
+        <div className="flex items-center gap-2 text-sm text-[#a3a3a3] mb-6">
+          <Link to="/products" className="flex items-center gap-1 hover:text-[#e5e5e5] transition-colors">
             <ArrowLeft size={14} /> All Designs
           </Link>
           <span>/</span>
-          <span className="text-[#e8e8f0] truncate">{product.title}</span>
+          <span className="text-[#e5e5e5] truncate">{product.title}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
@@ -60,28 +60,27 @@ export default function ProductDetailPage() {
 
           {/* Info */}
           <div className="space-y-6">
-            {/* Category & rating */}
             <div className="flex items-center gap-3">
               <span className="badge badge-primary">{product.category}</span>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={12} className={i < 4 ? 'text-[#ffbb33] fill-[#ffbb33]' : 'text-[#2a2a3e]'} />
+                  <Star key={i} size={12} className={i < 4 ? 'text-[#e5e5e5] fill-[#e5e5e5]' : 'text-[#404040]'} />
                 ))}
               </div>
-              <span className="text-xs text-[#8888aa]">{product.downloads || 0} downloads</span>
+              <span className="text-xs text-[#a3a3a3]">{product.downloads || 0} downloads</span>
             </div>
 
-            <h1 className="text-3xl font-black text-[#e8e8f0] leading-tight">{product.title}</h1>
+            <h1 className="text-3xl font-black text-[#e5e5e5] leading-tight">{product.title}</h1>
 
-            <p className="text-[#8888aa] leading-relaxed">{product.description}</p>
+            <p className="text-[#a3a3a3] leading-relaxed">{product.description}</p>
 
             {/* File formats */}
             {product.fileFormats?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-[#8888aa] uppercase tracking-wider mb-2">Included Formats</p>
+                <p className="text-xs font-semibold text-[#a3a3a3] uppercase tracking-wider mb-2">Included Formats</p>
                 <div className="flex flex-wrap gap-2">
                   {product.fileFormats.map(f => (
-                    <span key={f} className="flex items-center gap-1.5 px-3 py-1 bg-[#00d4ff]/10 border border-[#00d4ff]/20 rounded-lg text-xs font-bold text-[#00d4ff]">
+                    <span key={f} className="flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-[#404040] rounded text-xs font-bold text-[#e5e5e5]">
                       <FileArchive size={11} /> {f}
                     </span>
                   ))}
@@ -98,8 +97,8 @@ export default function ProductDetailPage() {
                 'Instant download after purchase',
                 'Lifetime access to your files',
               ].map(item => (
-                <div key={item} className="flex items-center gap-2 text-sm text-[#8888aa]">
-                  <Check size={14} className="text-[#00c851] shrink-0" /> {item}
+                <div key={item} className="flex items-center gap-2 text-sm text-[#a3a3a3]">
+                  <Check size={14} className="text-white shrink-0" /> {item}
                 </div>
               ))}
             </div>
@@ -107,10 +106,10 @@ export default function ProductDetailPage() {
             {/* Price & CTA */}
             <div className="glass-card p-5 space-y-4">
               <div className="flex items-end gap-2">
-                <span className="text-4xl font-black gradient-text">
+                <span className="text-4xl font-black text-white">
                   ₹{(product.price || 0).toLocaleString('en-IN')}
                 </span>
-                <span className="text-sm text-[#8888aa] mb-1">one-time</span>
+                <span className="text-sm text-[#a3a3a3] mb-1">one-time</span>
               </div>
 
               <button
@@ -131,7 +130,7 @@ export default function ProductDetailPage() {
                 </Link>
               )}
 
-              <p className="text-xs text-center text-[#8888aa]">
+              <p className="text-xs text-center text-[#a3a3a3]">
                 🔒 Secure payment via Razorpay · Instant digital delivery
               </p>
             </div>
@@ -139,7 +138,7 @@ export default function ProductDetailPage() {
             {/* Share */}
             <button
               onClick={() => navigator.share?.({ title: product.title, url: window.location.href })}
-              className="flex items-center gap-2 text-sm text-[#8888aa] hover:text-[#e8e8f0] transition-colors"
+              className="flex items-center gap-2 text-sm text-[#a3a3a3] hover:text-[#e5e5e5] transition-colors"
             >
               <Share2 size={14} /> Share this design
             </button>
@@ -149,7 +148,7 @@ export default function ProductDetailPage() {
         {/* Related */}
         {related.length > 0 && (
           <div>
-            <h2 className="text-2xl font-bold text-[#e8e8f0] mb-6">Related Designs</h2>
+            <h2 className="text-2xl font-bold text-[#e5e5e5] mb-6">Related Designs</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map(p => <ProductCard key={p._id} product={p} />)}
             </div>

@@ -39,13 +39,13 @@ export default function ImageGallery({ images = [] }) {
           <>
             <button
               onClick={prev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0a0a0f]/70 border border-[#2a2a3e] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#6c63ff]/20"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0a0a0f]/70 border border-[#404040] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10"
             >
               <ChevronLeft size={16} />
             </button>
             <button
               onClick={next}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0a0a0f]/70 border border-[#2a2a3e] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#6c63ff]/20"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0a0a0f]/70 border border-[#404040] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/10"
             >
               <ChevronRight size={16} />
             </button>
@@ -58,7 +58,7 @@ export default function ImageGallery({ images = [] }) {
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className={`h-1.5 rounded-full transition-all ${i === active ? 'w-6 bg-[#6c63ff]' : 'w-1.5 bg-white/30'}`}
+                className={`h-1.5 rounded-full transition-all ${i === active ? 'w-6 bg-white' : 'w-1.5 bg-white/30'}`}
               />
             ))}
           </div>
@@ -73,7 +73,7 @@ export default function ImageGallery({ images = [] }) {
               key={i}
               onClick={() => setActive(i)}
               className={`shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                i === active ? 'border-[#6c63ff]' : 'border-[#2a2a3e] opacity-60 hover:opacity-100'
+                i === active ? 'border-white' : 'border-[#404040] opacity-60 hover:opacity-100'
               }`}
             >
               <img src={src} alt="" className="w-full h-full object-cover" />

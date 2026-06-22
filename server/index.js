@@ -14,6 +14,7 @@ const adminRoutes = require('./routes/admin');
 const paymentsRoutes = require('./routes/payments');
 const ordersRoutes = require('./routes/orders');
 const contactRoutes = require('./routes/contact');
+const usersRoutes = require('./routes/users');
 
 // Import models
 const Admin = require('./models/Admin');
@@ -60,6 +61,7 @@ app.use('/api/products', productsRoutes);
 app.use('/api/payments', paymentsRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/users', usersRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

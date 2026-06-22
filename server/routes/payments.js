@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
-const nodemailer = require('nodemailer');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const { optionalUser } = require('../middleware/userAuth');
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -12,7 +12,7 @@ const razorpay = new Razorpay({
 });
 
 // POST /api/payments/create-order
-router.post('/create-order', async (req, res) => {
+router.post('/create-order', optionalUser, async (req, res) => {
   try {
     const { items, billing } = req.body;
     if (!items?.length || !billing) {
@@ -39,6 +39,7 @@ router.post('/create-order', async (req, res) => {
 
     // Create pending order in DB
     const order = new Order({
+      userId: req.user ? req.user._id : null,
       items: products.map(p => ({
         productId: p._id,
         title: p.title,
@@ -98,49 +99,6 @@ router.post('/verify', async (req, res) => {
     // Increment download counts
     const productIds = order.items.map(i => i.productId);
     await Product.updateMany({ _id: { $in: productIds } }, { $inc: { downloads: 1 } });
-
-    // Send Invoice Email
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      try {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-          },
-        });
-
-        const itemsHtml = order.items.map(i => `<li><b>${i.title}</b> - ₹${i.price}</li>`).join('');
-        // Fallback to localhost if CORS_ORIGIN is not perfectly set
-        const origin = process.env.CORS_ORIGIN || 'https://cadmarket.netlify.app';
-        const downloadLink = `${origin}/order-success/${order._id}`;
-
-        const mailOptions = {
-          from: `"CADMarket Support" <${process.env.EMAIL_USER}>`,
-          to: order.billing.email,
-          subject: `Your CADMarket Invoice & Download Link (Order: ${order._id})`,
-          html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
-              <h2 style="color: #6c63ff;">Thank you for your purchase!</h2>
-              <p>Hi <b>${order.billing.fullName}</b>,</p>
-              <p>Your payment of <b>₹${order.totalAmount}</b> was successful. Here are the CAD designs you purchased:</p>
-              <ul>${itemsHtml}</ul>
-              <br/>
-              <p><b>Download your files securely here:</b></p>
-              <a href="${downloadLink}" style="display: inline-block; padding: 12px 24px; background-color: #6c63ff; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Access Downloads</a>
-              <br/><br/>
-              <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
-              <p style="font-size: 12px; color: #888;">If you have any questions, feel free to reply to this email.</p>
-            </div>
-          `,
-        };
-
-        await transporter.sendMail(mailOptions);
-        console.log(`✉️ Email sent successfully to ${order.billing.email}`);
-      } catch (emailErr) {
-        console.error('Email sending failed:', emailErr);
-      }
-    }
 
     res.json({ success: true, orderId: order._id });
   } catch (err) {

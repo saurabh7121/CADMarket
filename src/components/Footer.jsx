@@ -1,96 +1,137 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, Mail } from 'lucide-react';
+import { Mail, Phone, MapPin, Code2, MessageSquare, Globe } from 'lucide-react';
+
+const LINKS = {
+  Explore: [
+    { label: 'All Designs',     to: '/products' },
+    { label: 'Mechanical',      to: '/products?category=Mechanical' },
+    { label: 'Architecture',    to: '/products?category=Architecture' },
+    { label: 'Automotive',      to: '/products?category=Automotive' },
+    { label: 'Aerospace',       to: '/products?category=Aerospace' },
+    { label: 'Electronics',     to: '/products?category=Electronics' },
+  ],
+  Account: [
+    { label: 'Sign In',         to: '/login' },
+    { label: 'Create Account',  to: '/signup' },
+    { label: 'My Orders',       to: '/orders' },
+    { label: 'Cart',            to: '/cart' },
+  ],
+  Legal: [
+    { label: 'Privacy Policy',  to: '#' },
+    { label: 'Terms of Service',to: '#' },
+    { label: 'Refund Policy',   to: '#' },
+    { label: 'Cookie Policy',   to: '#' },
+  ],
+};
+
+const SOCIALS = [
+  { icon: Code2,        href: '#', label: 'GitHub' },
+  { icon: MessageSquare,href: '#', label: 'Twitter' },
+  { icon: Globe,        href: '#', label: 'LinkedIn' },
+];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#2a2a3e] bg-[#0a0a0f] mt-auto">
-      <div className="container-wide px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="CADMarket Logo" className="w-8 h-8 object-contain" />
-              <span className="font-bold text-lg">CAD<span className="gradient-text">Market</span></span>
+    <footer className="bg-[#000000] border-t border-[#404040] mt-auto">
+      <div className="container-wide px-4">
+
+        {/* Main grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 py-16">
+
+          {/* Brand column — spans 2 cols on lg */}
+          <div className="lg:col-span-2">
+            {/* Logo + wordmark */}
+            <Link to="/" className="flex items-center gap-2.5 mb-5">
+              <img
+                src="/logo.png"
+                alt="CADMarket Logo"
+                className="w-9 h-9 object-contain"
+                style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.5)) brightness(1.3)' }}
+              />
+              <span className="font-bold text-xl tracking-tight text-white">
+                CAD<span className="text-[#a3a3a3]">Market</span>
+              </span>
             </Link>
-            <p className="text-sm text-[#8888aa] leading-relaxed mb-4">
-              Premium CAD designs for engineers, architects, and makers. Download, customize, and build.
+
+            <p className="text-sm text-[#737373] leading-relaxed max-w-xs mb-6">
+              A marketplace for professional CAD designs. Download STEP, STL, SolidWorks,
+              and AutoCAD files instantly — no subscription required.
             </p>
-            <div className="flex items-center gap-3">
-              {['GitHub', 'Twitter', 'LinkedIn'].map((label, i) => (
+
+            {/* Contact details */}
+            <div className="space-y-2.5 mb-6">
+              <div className="flex items-center gap-2.5">
+                <Mail size={13} className="text-[#525252] shrink-0" />
                 <a
-                  key={i}
-                  href="#"
-                  title={label}
-                  className="w-8 h-8 rounded-lg bg-white/5 border border-[#2a2a3e] flex items-center justify-center text-[#8888aa] hover:text-[#e8e8f0] hover:border-[#6c63ff]/40 transition-all"
+                  href="mailto:hello@cadmarket.in"
+                  className="text-sm text-[#a3a3a3] hover:text-white transition-colors"
                 >
-                  <ExternalLink size={14} />
+                  hello@cadmarket.in
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Phone size={13} className="text-[#525252] shrink-0" />
+                <a
+                  href="tel:+919876543210"
+                  className="text-sm text-[#a3a3a3] hover:text-white transition-colors"
+                >
+                  +91 98765 43210
+                </a>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <MapPin size={13} className="text-[#525252] shrink-0 mt-0.5" />
+                <span className="text-sm text-[#a3a3a3]">
+                  Koramangala, Bengaluru,<br />Karnataka 560034, India
+                </span>
+              </div>
+            </div>
+
+            {/* Socials */}
+            <div className="flex items-center gap-2">
+              {SOCIALS.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="w-8 h-8 rounded flex items-center justify-center bg-[#171717] border border-[#404040] text-[#525252] hover:text-white hover:border-[#737373] transition-all"
+                >
+                  <Icon size={14} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Products */}
-          <div>
-            <h4 className="font-semibold text-sm text-[#e8e8f0] mb-4">Products</h4>
-            <ul className="space-y-2">
-              {['Mechanical Parts', 'Architecture', 'Electronics', 'Automotive', 'Aerospace', 'Medical Devices'].map(item => (
-                <li key={item}>
-                  <Link
-                    to={`/products?category=${item.split(' ')[0]}`}
-                    className="text-sm text-[#8888aa] hover:text-[#e8e8f0] transition-colors"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h4 className="font-semibold text-sm text-[#e8e8f0] mb-4">Support</h4>
-            <ul className="space-y-2">
-              {[
-                { label: 'Contact Us', to: '/contact' },
-                { label: 'FAQ', to: '/contact' },
-                { label: 'Downloads', to: '/orders' },
-                { label: 'Refund Policy', to: '/contact' },
-              ].map(({ label, to }) => (
-                <li key={label}>
-                  <Link to={to} className="text-sm text-[#8888aa] hover:text-[#e8e8f0] transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-sm text-[#e8e8f0] mb-4">Contact</h4>
-            <a
-              href="mailto:support@cadmarket.com"
-              className="flex items-center gap-2 text-sm text-[#8888aa] hover:text-[#e8e8f0] transition-colors mb-2"
-            >
-              <Mail size={14} />
-              support@cadmarket.com
-            </a>
-            <p className="text-sm text-[#8888aa]">Mon – Fri, 9am – 6pm IST</p>
-          </div>
+          {/* Link columns */}
+          {Object.entries(LINKS).map(([heading, items]) => (
+            <div key={heading}>
+              <h4 className="text-xs font-semibold text-[#e5e5e5] uppercase tracking-widest mb-4">
+                {heading}
+              </h4>
+              <ul className="space-y-2.5">
+                {items.map(({ label, to }) => (
+                  <li key={label}>
+                    <Link
+                      to={to}
+                      className="text-sm text-[#737373] hover:text-[#e5e5e5] transition-colors"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <hr className="divider my-8" />
+        {/* Divider */}
+        <div className="border-t border-[#262626]" />
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#8888aa]">
-            © {new Date().getFullYear()} CADMarket. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(item => (
-              <a key={item} href="#" className="text-xs text-[#8888aa] hover:text-[#e8e8f0] transition-colors">
-                {item}
-              </a>
-            ))}
+        {/* Bottom bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 py-5 text-xs text-[#525252]">
+          <p>© {new Date().getFullYear()} CADMarket. All rights reserved.</p>
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#404040] inline-block" />
+            <span>Built for engineers, by engineers.</span>
           </div>
         </div>
       </div>
