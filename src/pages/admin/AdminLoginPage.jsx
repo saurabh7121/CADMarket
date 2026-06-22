@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Box, Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function AdminLoginPage() {
@@ -25,68 +25,85 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center px-4">
-      {/* Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-[#6c63ff]/10 blur-[120px]" />
+    <div className="auth-page">
+      {/* Ambient background */}
+      <div className="auth-bg">
+        <div className="auth-grid" />
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="auth-container">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#6c63ff] to-[#00d4ff] flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
-            <Box size={26} className="text-white" />
-          </div>
-          <h1 className="text-2xl font-black text-[#e8e8f0]">Admin Panel</h1>
-          <p className="text-sm text-[#8888aa] mt-1">Sign in to manage CADMarket</p>
+        <div className="auth-logo">
+          <img src="/logo.png" alt="CADMarket" className="w-8 h-8 object-contain" />
+          <span className="font-bold text-lg tracking-tight">
+            CAD<span className="gradient-text">Market</span>
+          </span>
         </div>
 
-        <form onSubmit={handleSubmit} className="glass-card p-8 space-y-5">
-          <div>
-            <label className="block text-xs font-semibold text-[#8888aa] mb-1.5">Email Address</label>
-            <div className="relative">
-              <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8888aa]" />
-              <input
-                type="email"
-                required
-                value={form.email}
-                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                placeholder="admin@cadmarket.com"
-                className="input-field pl-9"
-                autoComplete="email"
-              />
+        <div className="auth-card">
+          {/* Header */}
+          <div className="auth-header">
+            <div className="auth-icon-wrap">
+              <Lock size={22} className="text-white" />
             </div>
+            <h1 className="auth-title">Admin Panel</h1>
+            <p className="auth-subtitle">Sign in to manage CADMarket</p>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-[#8888aa] mb-1.5">Password</label>
-            <div className="relative">
-              <Lock size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8888aa]" />
-              <input
-                type={showPw ? 'text' : 'password'}
-                required
-                value={form.password}
-                onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-                placeholder="••••••••"
-                className="input-field pl-9 pr-10"
-                autoComplete="current-password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPw(v => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8888aa] hover:text-[#e8e8f0] transition-colors"
-              >
-                {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
-              </button>
+          <form onSubmit={handleSubmit} className="auth-form">
+            {/* Email */}
+            <div className="auth-field">
+              <label className="auth-label">Email Address</label>
+              <div className="auth-input-wrap">
+                <Mail size={15} className="auth-input-icon" />
+                <input
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                  placeholder="admin@cadmarket.com"
+                  className="auth-input"
+                  autoComplete="email"
+                />
+              </div>
             </div>
-          </div>
 
-          <button type="submit" disabled={loading} className="w-full btn-primary py-3">
-            {loading ? <><span className="spinner w-4 h-4" /> Signing in…</> : 'Sign In to Dashboard'}
-          </button>
-        </form>
+            {/* Password */}
+            <div className="auth-field">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrap">
+                <Lock size={15} className="auth-input-icon" />
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  required
+                  value={form.password}
+                  onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+                  placeholder="••••••••"
+                  className="auth-input pr-10"
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw(v => !v)}
+                  className="auth-pw-toggle"
+                  tabIndex={-1}
+                >
+                  {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
+                </button>
+              </div>
+            </div>
 
-        <p className="text-center text-xs text-[#8888aa] mt-5">
+            <button type="submit" disabled={loading} className="auth-submit">
+              {loading ? (
+                <><Loader2 size={16} className="animate-spin" /> Signing in…</>
+              ) : (
+                'Sign In to Dashboard'
+              )}
+            </button>
+          </form>
+        </div>
+
+        <p className="text-center text-xs text-[#8888aa] mt-2">
           Restricted access — authorised personnel only
         </p>
       </div>
