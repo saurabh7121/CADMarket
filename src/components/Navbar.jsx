@@ -152,7 +152,10 @@ export default function Navbar() {
         >
           <ShoppingCart size={18} className="text-[#e5e5e5]" />
           {count > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#ffffff] text-black text-xs font-bold flex items-center justify-center">
+            <span
+              key={count}
+              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#ffffff] text-black text-xs font-bold flex items-center justify-center animate-badge-bounce"
+            >
               {count}
             </span>
           )}

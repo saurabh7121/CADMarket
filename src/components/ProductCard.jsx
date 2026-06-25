@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Eye, Star, Download } from 'lucide-react';
+import { ShoppingCart, Eye, Star } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const FALLBACK = 'https://placehold.co/400x300/171717/e5e5e5?text=CAD+Design';
@@ -17,12 +17,12 @@ export default function ProductCard({ product }) {
   return (
     <Link to={`/products/${product._id}`} className="product-card glass-card overflow-hidden block group">
       {/* Thumbnail */}
-      <div className="relative overflow-hidden aspect-[4/3] bg-[#12121a]">
+      <div className="relative overflow-hidden aspect-[4/3] bg-white">
         <img
           src={product.thumbnail || FALLBACK}
           alt={product.title}
           onError={e => { e.target.src = FALLBACK; }}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
@@ -67,10 +67,6 @@ export default function ProductCard({ product }) {
               />
             ))}
           </div>
-          <span className="text-xs text-[#a3a3a3]">
-            <Download size={10} className="inline mr-0.5" />
-            {product.downloads || 0}
-          </span>
         </div>
 
         <div className="flex items-center justify-between">

@@ -16,12 +16,7 @@ const LINKS = {
     { label: 'My Orders',       to: '/orders' },
     { label: 'Cart',            to: '/cart' },
   ],
-  Legal: [
-    { label: 'Privacy Policy',  to: '#' },
-    { label: 'Terms of Service',to: '#' },
-    { label: 'Refund Policy',   to: '#' },
-    { label: 'Cookie Policy',   to: '#' },
-  ],
+ 
 };
 
 const SOCIALS = [
@@ -72,16 +67,16 @@ export default function Footer() {
               <div className="flex items-center gap-2.5">
                 <Phone size={13} className="text-[#525252] shrink-0" />
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+9190++++++++"
                   className="text-sm text-[#a3a3a3] hover:text-white transition-colors"
                 >
-                  +91 98765 43210
+                  +91 90++++++++
                 </a>
               </div>
               <div className="flex items-start gap-2.5">
                 <MapPin size={13} className="text-[#525252] shrink-0 mt-0.5" />
                 <span className="text-sm text-[#a3a3a3]">
-                  Koramangala, Bengaluru,<br />Karnataka 560034, India
+                  Chhatrapati Sambhajinagar, Maharashtra,<br />Maharashtra 431001, India
                 </span>
               </div>
             </div>

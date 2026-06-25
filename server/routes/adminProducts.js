@@ -17,7 +17,7 @@ router.get('/', protect, async (req, res) => {
 // POST /api/admin/products
 router.post('/', protect, uploadProductFiles, async (req, res) => {
   try {
-    const { title, description, category, price, fileFormats } = req.body;
+    const { title, description, category, price, fileFormats, isFeatured } = req.body;
     if (!req.uploadedThumbnail) return res.status(400).json({ message: 'Thumbnail is required' });
     if (!req.uploadedCad) return res.status(400).json({ message: 'CAD file is required' });
 
@@ -25,6 +25,7 @@ router.post('/', protect, uploadProductFiles, async (req, res) => {
       title, description, category,
       price: +price,
       fileFormats: fileFormats ? JSON.parse(fileFormats) : [],
+      isFeatured: isFeatured === 'true' || isFeatured === true,
       thumbnail: req.uploadedThumbnail.url,
       thumbnailPublicId: req.uploadedThumbnail.publicId,
       previewImages: req.uploadedPreviews?.map(p => p.url) || [],
@@ -46,12 +47,15 @@ router.put('/:id', protect, uploadProductFiles, async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
-    const { title, description, category, price, fileFormats } = req.body;
+    const { title, description, category, price, fileFormats, isFeatured } = req.body;
     if (title) product.title = title;
     if (description) product.description = description;
     if (category) product.category = category;
     if (price) product.price = +price;
     if (fileFormats) product.fileFormats = JSON.parse(fileFormats);
+    if (isFeatured !== undefined) {
+      product.isFeatured = isFeatured === 'true' || isFeatured === true;
+    }
 
     if (req.uploadedThumbnail) {
       // Delete old thumbnail from Cloudinary
@@ -106,6 +110,19 @@ router.delete('/:id', protect, async (req, res) => {
     await product.deleteOne();
     res.json({ message: 'Product deleted' });
   } catch { res.status(500).json({ message: 'Failed to delete' }); }
+});
+
+// PATCH /api/admin/products/:id/toggle-featured
+router.patch('/:id/toggle-featured', protect, async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    product.isFeatured = !product.isFeatured;
+    await product.save();
+    res.json({ product });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to toggle featured status' });
+  }
 });
 
 module.exports = router;

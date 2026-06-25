@@ -18,6 +18,7 @@ const productSchema = new mongoose.Schema({
   fileFormats: [{ type: String }],                  // ['STEP', 'STL', ...]
   downloads: { type: Number, default: 0 },
   isActive: { type: Boolean, default: true },
+  isFeatured: { type: Boolean, default: false },
 }, { timestamps: true });
 
 productSchema.index({ title: 'text', description: 'text', category: 'text' });

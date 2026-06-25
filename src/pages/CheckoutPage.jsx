@@ -220,7 +220,7 @@ export default function CheckoutPage() {
                       <img
                         src={item.thumbnail || 'https://placehold.co/50x38/171717/ffffff?text=CAD'}
                         alt={item.title}
-                        className="w-12 h-9 rounded-lg object-cover shrink-0 border border-[#404040]"
+                        className="w-12 h-9 rounded-lg object-contain bg-white shrink-0 border border-[#404040]"
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-medium text-[#e8e8f0] truncate">{item.title}</p>

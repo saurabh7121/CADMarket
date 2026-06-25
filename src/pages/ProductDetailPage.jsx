@@ -6,7 +6,7 @@ import ImageGallery from '../components/ImageGallery';
 import ProductCard from '../components/ProductCard';
 import { LoadingPage, EmptyState } from '../components/UI';
 import {
-  ShoppingCart, Download, Star, Check, FileArchive,
+  ShoppingCart, Star, Check, FileArchive,
   Layers, ArrowLeft, Share2, Package
 } from 'lucide-react';
 
@@ -67,7 +67,6 @@ export default function ProductDetailPage() {
                   <Star key={i} size={12} className={i < 4 ? 'text-[#e5e5e5] fill-[#e5e5e5]' : 'text-[#404040]'} />
                 ))}
               </div>
-              <span className="text-xs text-[#a3a3a3]">{product.downloads || 0} downloads</span>
             </div>
 
             <h1 className="text-3xl font-black text-[#e5e5e5] leading-tight">{product.title}</h1>

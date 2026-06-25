@@ -198,7 +198,7 @@ function OrderCard({ order, expanded, onToggle, downloading, onDownload }) {
                   <img
                     src={item.thumbnail || 'https://placehold.co/60x46/171717/ffffff?text=CAD'}
                     alt={item.title}
-                    className="w-12 h-9 sm:w-14 sm:h-11 rounded object-cover shrink-0 border border-[#404040]"
+                    className="w-12 h-9 sm:w-14 sm:h-11 rounded object-contain bg-white shrink-0 border border-[#404040]"
                   />
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-semibold text-[#e8e8f0] truncate">{item.title}</p>

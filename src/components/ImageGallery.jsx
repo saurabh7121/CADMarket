@@ -28,11 +28,11 @@ export default function ImageGallery({ images = [] }) {
     <>
       {/* Main viewer */}
       <div className="relative rounded-2xl overflow-hidden group">
-        <div className="aspect-video bg-[#12121a] overflow-hidden cursor-zoom-in" onClick={() => setLightbox(true)}>
+        <div className="aspect-video bg-white overflow-hidden cursor-zoom-in" onClick={() => setLightbox(true)}>
           <img
             src={images[active]}
             alt={`Preview ${active + 1}`}
-            className="w-full h-full object-cover transition-all duration-500"
+            className="w-full h-full object-contain transition-all duration-500"
           />
         </div>
         {images.length > 1 && (
@@ -76,7 +76,7 @@ export default function ImageGallery({ images = [] }) {
                 i === active ? 'border-white' : 'border-[#404040] opacity-60 hover:opacity-100'
               }`}
             >
-              <img src={src} alt="" className="w-full h-full object-cover" />
+              <img src={src} alt="" className="w-full h-full object-contain bg-white" />
             </button>
           ))}
         </div>

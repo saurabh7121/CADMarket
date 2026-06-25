@@ -18,6 +18,9 @@ router.get('/', async (req, res) => {
     if (category && category !== 'All') {
       query.category = category;
     }
+    if (req.query.isFeatured) {
+      query.isFeatured = req.query.isFeatured === 'true';
+    }
     if (minPrice || maxPrice) {
       query.price = {};
       if (minPrice) query.price.$gte = +minPrice;

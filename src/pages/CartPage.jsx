@@ -43,7 +43,7 @@ export default function CartPage() {
                     src={item.thumbnail || FALLBACK}
                     alt={item.title}
                     onError={e => { e.target.src = FALLBACK; }}
-                    className="w-16 h-12 sm:w-20 sm:h-14 rounded-lg object-cover border border-[#404040]"
+                    className="w-20 h-15 sm:w-28 sm:h-20 rounded-lg object-contain bg-white border border-[#404040]"
                   />
                 </Link>
                 <div className="flex-1 min-w-0">

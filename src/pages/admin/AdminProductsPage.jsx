@@ -38,6 +38,15 @@ export default function AdminProductsPage() {
       fetchProducts();
     } catch { toast.error('Failed to delete'); }
   };
+  const handleToggleFeatured = async (productId) => {
+    try {
+      const { data } = await api.patch(`/admin/products/${productId}/toggle-featured`);
+      toast.success(data.product.isFeatured ? 'Product featured!' : 'Product unfeatured!');
+      setProducts(prev => prev.map(p => p._id === productId ? { ...p, isFeatured: data.product.isFeatured } : p));
+    } catch {
+      toast.error('Failed to toggle featured status');
+    }
+  };
 
   return (
     <div className="space-y-5">
@@ -68,7 +77,7 @@ export default function AdminProductsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[#2a2a3e]">
-                {['Product', 'Category', 'Price', 'Downloads', 'Formats', 'Actions'].map(h => (
+                {['Product', 'Category', 'Price', 'Downloads', 'Formats', 'Featured', 'Actions'].map(h => (
                   <th key={h} className="text-left py-3 px-4 text-xs text-[#8888aa] font-semibold uppercase tracking-wider">
                     {h}
                   </th>
@@ -77,9 +86,9 @@ export default function AdminProductsPage() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={6} className="py-12 text-center text-[#8888aa]">Loading…</td></tr>
+                <tr><td colSpan={7} className="py-12 text-center text-[#8888aa]">Loading…</td></tr>
               ) : products.length === 0 ? (
-                <tr><td colSpan={6} className="py-12">
+                <tr><td colSpan={7} className="py-12">
                   <EmptyState icon={Package} title="No products found" />
                 </td></tr>
               ) : (
@@ -91,7 +100,7 @@ export default function AdminProductsPage() {
                           src={p.thumbnail || FALLBACK}
                           alt={p.title}
                           onError={e => { e.target.src = FALLBACK; }}
-                          className="w-12 h-9 rounded-lg object-cover shrink-0"
+                          className="w-12 h-9 rounded-lg object-contain bg-white shrink-0 border border-[#2a2a3e]"
                         />
                         <div>
                           <p className="font-medium text-[#e8e8f0] line-clamp-1">{p.title}</p>
@@ -110,6 +119,18 @@ export default function AdminProductsPage() {
                           </span>
                         ))}
                       </div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <button
+                        onClick={() => handleToggleFeatured(p._id)}
+                        className={`text-xs px-2.5 py-1 rounded-full font-semibold border transition-all ${
+                          p.isFeatured
+                            ? 'bg-[#e29d00]/15 border-[#e29d00]/30 text-[#e29d00]'
+                            : 'bg-transparent border-[#2a2a3e] text-[#8888aa] hover:border-[#8888aa]/30'
+                        }`}
+                      >
+                        {p.isFeatured ? '★ Featured' : '☆ Standard'}
+                      </button>
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-1">
@@ -172,6 +193,7 @@ function ProductModal({ product, onClose, onSaved }) {
     category: product?.category || CATEGORIES[0],
     price: product?.price || '',
     fileFormats: product?.fileFormats || [],
+    isFeatured: product?.isFeatured || false,
   });
   const [thumbnail, setThumbnail] = useState(null);
   const [previewFiles, setPreviewFiles] = useState([]);
@@ -273,6 +295,20 @@ function ProductModal({ product, onClose, onSaved }) {
                 className="input-field" placeholder="999"
               />
             </div>
+          </div>
+
+          {/* Featured flag */}
+          <div className="flex items-center gap-2 py-1">
+            <input
+              type="checkbox"
+              id="isFeatured"
+              checked={form.isFeatured}
+              onChange={e => setForm(f => ({ ...f, isFeatured: e.target.checked }))}
+              className="w-4 h-4 rounded bg-transparent border-[#2a2a3e] text-[#6c63ff] focus:ring-0 cursor-pointer"
+            />
+            <label htmlFor="isFeatured" className="text-xs font-semibold text-[#8888aa] cursor-pointer select-none">
+              Featured Design (displays on homepage hero)
+            </label>
           </div>
 
           {/* File formats */}

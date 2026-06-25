@@ -114,7 +114,7 @@ export default function OrderSuccessPage() {
                     <img
                       src={item.thumbnail || 'https://placehold.co/50x38/171717/ffffff?text=CAD'}
                       alt={item.title}
-                      className="w-14 h-10 rounded-lg object-cover shrink-0 border border-[#404040]"
+                      className="w-14 h-10 rounded-lg object-contain bg-white shrink-0 border border-[#404040]"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-[#e8e8f0] truncate">{item.title}</p>
